@@ -1,10 +1,6 @@
-/* eslint-disable valid-jsdoc */
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
-/* eslint-disable require-jsdoc */
 import * as fs from 'fs';
 import {ResponseType} from '../type';
-
+import chalk from 'chalk';
 /**
  * Class to Modify Notes
  */
@@ -24,18 +20,18 @@ export class ModifyNote {
       type: 'add',
       success: false,
     };
-    fs.access(`/src/app/notas/${user}/${title}.json`, fs.constants.F_OK, (err) => {
+    fs.access(`src/app/notas/${user}/${title}.json`, fs.constants.F_OK, (err) => {
       if (err) {
-        response = {type: 'update', success: false, error: 'Note not found'};
+        response = {type: 'update', success: false, error: chalk.red('Note not found')};
         cb(response, undefined);
       } else {
-        fs.readFile(`/src/app/notas/${user}/${title}.json`, (err)=> {
+        fs.readFile(`src/app/notas/${user}/${title}.json`, (err)=> {
           const json = require(`/src/app/notas/${user}/${title}.json`);
           json.body = body;
 
-          fs.writeFile(`/src/app/notas/${user}/${title}.json`, JSON.stringify(json, null, 2), (err) => {
+          fs.writeFile(`src/app/notas/${user}/${title}.json`, JSON.stringify(json, null, 2), (err) => {
             if (err) {
-              response = {type: 'update', success: false, error: 'Error updating note'};
+              response = {type: 'update', success: false, error: chalk.red('Error updating note')};
               cb(response, undefined);
             } else {
               response = {

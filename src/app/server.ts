@@ -17,15 +17,6 @@ const removeNote = new RemoveNote();
 const listNotes = new ListNotes();
 const readNote = new ReadNotes();
 
-/**
- * Tipo ResponseType que se pasa al cliente
- */
-export type ResponseType = {
-  type: 'add' | 'update' | 'remove' | 'read' | 'list';
-  success: boolean;
-  notes?: string[];
-}
-
 export class Server {
   constructor() {}
   start() {

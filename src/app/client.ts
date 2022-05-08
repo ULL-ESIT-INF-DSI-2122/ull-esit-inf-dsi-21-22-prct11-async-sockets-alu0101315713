@@ -35,73 +35,71 @@ export class Client {
    * @param response Json response on string format
    */
   display(response: string) {
-    const titleArray = [];
-    const colorArray = [];
-    const bodyArray = [];
-    const serverResponse = JSON.parse(response);
+    const title = [];
+    const color = [];
+    const body = [];
+    const respuesta = JSON.parse(response);
     let result = '';
 
-    if (serverResponse.success === true) {
-      if (serverResponse.notes) {
-        for (const note of serverResponse.notes) {
-          titleArray.push(note.title);
-          colorArray.push(note.color);
-          bodyArray.push(note.body);
+    if (respuesta.success === true) {
+      if (respuesta.notes) {
+        for (const note of respuesta.notes) {
+          title.push(note.title);
+          color.push(note.color);
+          body.push(note.body);
         }
       }
 
-      if (serverResponse.type === 'userAdd') {
-        return console.log(chalk.green(`El usuario ${serverResponse.user} ha creado su directorio`));
+      if (respuesta.type === 'userAdd') {
+        return console.log(chalk.green(`El usuario ${respuesta.user} ha creado su directorio`));
       }
 
-      if (serverResponse.type === 'add') {
-        console.log(`${serverResponse.notes.title}`);
-        return console.log(chalk.green(`La nota ${titleArray[0]} ha sido creada correctamente`));
+      if (respuesta.type === 'add') {
+        console.log(`${respuesta.notes.title}`);
+        return console.log(chalk.green(`La nota ${title[0]} ha sido creada correctamente`));
       }
 
-      if (serverResponse.type === 'update') {
-        return console.log(chalk.green(`La nota ${titleArray[0]} ha sido actualizada correctamente`));
+      if (respuesta.type === 'update') {
+        return console.log(chalk.green(`La nota ${title[0]} ha sido actualizada correctamente`));
       }
 
-      if (serverResponse.type === 'remove') {
-        return console.log(chalk.green(`La nota ${titleArray[0]} ha sido eliminada correctamente`));
+      if (respuesta.type === 'remove') {
+        return console.log(chalk.green(`La nota ${title[0]} ha sido eliminada correctamente`));
       }
 
-      if (serverResponse.type === 'read') {
-        return console.log(chalk.green(`La nota ${titleArray[0]} ha sido leida correctamente`));
-        // return `Título: ${color.getColor(`${colorArray}`, `${titleArray}`)} => Contenido: ${color.getColor(`${colorArray}`, `${bodyArray}`)}`;
+      if (respuesta.type === 'read') {
+        return console.log(chalk.green(`La nota ${title[0]} ha sido leida correctamente`));
       }
 
-      if (serverResponse.type === 'list') {
-        for (let i = 0; i < titleArray.length; i++) {
-          result += `${chalk.green(`${i + 1}`)}. ${chalk.green(`${titleArray[i]}`)} => ${chalk.green(`${bodyArray[i]}`)}`;
-          // result += `${color.getColor(`${colorArray[i]}`, `${titleArray[i]}`)}` + '\n';
+      if (respuesta.type === 'list') {
+        for (let i = 0; i < title.length; i++) {
+          result += `${chalk.green(`${i + 1}`)}. ${chalk.green(`${title[i]}`)} => ${chalk.green(`${body[i]}`)}`;
         }
         return result;
       }
-    } else if (serverResponse.success === false) {
-      if (serverResponse.type === 'userAdd') {
-        return serverResponse.error;
+    } else if (respuesta.success === false) {
+      if (respuesta.type === 'userAdd') {
+        return respuesta.error;
       }
 
-      if (serverResponse.type === 'add') {
-        return serverResponse.error;
+      if (respuesta.type === 'add') {
+        return respuesta.error;
       }
 
-      if (serverResponse.type === 'update') {
-        return serverResponse.error;
+      if (respuesta.type === 'update') {
+        return respuesta.error;
       }
 
-      if (serverResponse.type === 'remove') {
-        return serverResponse.error;
+      if (respuesta.type === 'remove') {
+        return respuesta.error;
       }
 
-      if (serverResponse.type === 'read') {
-        return serverResponse.error;
+      if (respuesta.type === 'read') {
+        return respuesta.error;
       }
 
-      if (serverResponse.type === 'list') {
-        return serverResponse.error;
+      if (respuesta.type === 'list') {
+        return respuesta.error;
       }
     }
   }

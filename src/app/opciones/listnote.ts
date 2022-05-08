@@ -1,9 +1,6 @@
-/* eslint-disable valid-jsdoc */
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
-/* eslint-disable require-jsdoc */
 import * as fs from 'fs';
 import {Note, ResponseType} from '../type';
+import chalk from 'chalk';
 
 /**
  * Class to List Notes
@@ -24,36 +21,41 @@ export class ListNotes {
       success: false,
     };
 
-    fs.access(`src/app/notas/${user}`, fs.constants.F_OK, (err) => {
+    fs.access(`src/app/notas/${user}/`, fs.constants.F_OK, (err) => {
       if (err) {
         response = {type: 'list', success: false, error: 'User not found'};
         cb(response, undefined);
       } else {
-        fs.readdir(`src/app/notas/${user}`, (err, files: any) => {
+        fs.access(`src/app/notas/${user}/`, fs.constants.F_OK, (err) => {
           if (err) {
-            response = {type: 'list', success: false, error: 'Error reading notes'};
+            response = {type: 'list', success: false, error: chalk.red('User not found')};
             cb(response, undefined);
-          } else {
-            files.forEach((file: string) => {
-              const json: any = require(`src/app/notas/${user}/${file}`);
-              notesArray.push(json);
+            fs.readdir(`src/app/notas/${user}/`, (err, files) => {
+              if (err) {
+                response = {type: 'list', success: false, error: chalk.red('Error reading notes')};
+                cb(response, undefined);
+              } else {
+                files.forEach((file: any) => {
+                  const json = require(`src/app/notas/${user}/${file}`);
+                  notesArray.push(json);
+                });
+                if (notesArray.length > 0) {
+                  response = {
+                    type: 'list',
+                    success: true,
+                    notes: notesArray,
+                  };
+
+                  cb(undefined, response);
+                } else {
+                  response = {type: 'list', success: false, error: chalk.red('No notes found')};
+                  cb(response, undefined);
+                }
+              }
             });
-
-            if (notesArray.length > 0) {
-              response = {
-                type: 'list',
-                success: true,
-                notes: notesArray,
-              };
-
-              cb(undefined, response);
-            } else {
-              response = {type: 'list', success: false, error: 'No notes found'};
-              cb(response, undefined);
-            }
           }
         });
-      }
+      };
     });
   };
-};
+}

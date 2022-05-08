@@ -6,7 +6,6 @@ import {adduserInterface} from '../comandos/interfaces';
 let request: RequestType;
 
 // Add Note
-
 export class ADDuser implements adduserInterface {
   constructor() {}
   public adduser() {

@@ -1,17 +1,12 @@
-/* eslint-disable valid-jsdoc */
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
-/* eslint-disable require-jsdoc */
 import * as fs from 'fs';
 import {ResponseType} from '../type';
-
+import chalk from 'chalk';
 /**
  * Class to Read Notes
  */
 export class ReadNotes {
   constructor() {
   }
-
   /**
    * This function reads a note
    * @param user User name
@@ -26,12 +21,12 @@ export class ReadNotes {
 
     fs.access(`src/app/notas/${user}/${title}.json`, fs.constants.F_OK, (err) => {
       if (err) {
-        response = {type: 'read', success: false, error: 'Note not found'};
+        response = {type: 'read', success: false, error: chalk.red('Note not found')};
         cb(response, undefined);
       } else {
         fs.readFile(`src/app/notas/${user}/${title}.json`, (err) => {
           if (err) {
-            response = {type: 'read', success: false, error: 'Error reading note'};
+            response = {type: 'read', success: false, error: chalk.red('Error reading note')};
             cb(response, undefined);
           } else {
             const json: any = require(`src/app/notas/${user}/${title}.json`);
