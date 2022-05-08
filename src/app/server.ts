@@ -16,9 +16,14 @@ const modifyNote = new ModifyNote();
 const removeNote = new RemoveNote();
 const listNotes = new ListNotes();
 const readNote = new ReadNotes();
-
+/**
+ * Clase servidor, detecta los comandos y los envía al usuario
+ */
 export class Server {
   constructor() {}
+  /**
+   * Función que se ejecuta cuando se conecta un cliente
+   */
   start() {
     net.createServer({allowHalfOpen: true}, (connection) => {
       console.log('Un usuario se ha conectado.');
@@ -31,9 +36,17 @@ export class Server {
       console.log('Servidor iniciado en el puerto 60300.');
     });
   }
+  /**
+   * Se mueve todo el manejo de datos
+   * @param datosCliente Datos del cliente
+   * @param connection Conexión del cliente
+   */
   datosServidor(datosCliente: string, connection: net.Socket) {
     const jsonclient = JSON.parse(datosCliente);
     switch (jsonclient.type) {
+      /**
+       * Añade una nota
+       */
       case 'add':
         console.log(chalk.green('Se ha solicitado una nueva nota.'));
         addNote.addNoteCallback(`${jsonclient.user}`, `${jsonclient.title}`, `${jsonclient.body}`, `${jsonclient.color}`, (err: any, correct: any) => {
@@ -45,6 +58,9 @@ export class Server {
           connection.end();
         });
         break;
+        /**
+         * Modifica una nota
+         */
       case 'update':
         console.log(chalk.green('Se ha solicitado una actualización de nota.'));
         modifyNote.modifyNoteCallback(`${jsonclient.user}`, `${jsonclient.title}`, `${jsonclient.body}`, (err, correct) => {
@@ -56,6 +72,9 @@ export class Server {
           connection.end();
         });
         break;
+        /**
+         * Elimina una nota
+         */
       case 'remove':
         console.log(chalk.green('Se ha solicitado una eliminación de nota.'));
         removeNote.removeNoteCallback(`${jsonclient.user}`, `${jsonclient.title}`, (err, correct) => {
@@ -67,6 +86,9 @@ export class Server {
           connection.end();
         });
         break;
+        /**
+         * Lee una nota
+         */
       case 'read':
         console.log(chalk.green('Se ha solicitado una lectura de nota.'));
         readNote.readNoteCallback(`${jsonclient.user}`, `${jsonclient.title}`, (err: any, correct: any) => {
@@ -78,6 +100,9 @@ export class Server {
           connection.end();
         });
         break;
+        /**
+         * Lista las notas
+         */
       case 'list':
         console.log(chalk.green('Se ha solicitado una lista de notas.'));
         listNotes.listNoteCallback(`${jsonclient.user}`, (err: any, correct: any) => {

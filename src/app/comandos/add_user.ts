@@ -5,10 +5,15 @@ import {adduserInterface} from '../comandos/interfaces';
 
 let request: RequestType;
 
-// Add Note
+/**
+ * Add Note
+ */
 export class ADDuser implements adduserInterface {
   constructor() {}
-  public adduser() {
+  /**
+   * Add a new user
+   */
+  adduser() {
     yargs.command({
       command: 'userAdd',
       describe: 'Add a new user',
@@ -19,6 +24,9 @@ export class ADDuser implements adduserInterface {
           type: 'string',
         },
       },
+      /**
+       * @param argv Arguments
+       */
       handler(argv) {
         request = {
           type: 'userAdd',

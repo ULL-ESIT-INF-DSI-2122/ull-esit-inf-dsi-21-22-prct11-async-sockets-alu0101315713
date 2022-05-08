@@ -34,12 +34,11 @@ export class Client {
    * Print the content of the response json
    * @param response Json response on string format
    */
-  display(response: string) {
-    const title = [];
+  display(response: string): any {
+    const title: string[] = [];
     const color = [];
     const body = [];
     const respuesta = JSON.parse(response);
-    let result = '';
 
     if (respuesta.success === true) {
       if (respuesta.notes) {
@@ -49,57 +48,46 @@ export class Client {
           body.push(note.body);
         }
       }
-
-      if (respuesta.type === 'userAdd') {
-        return console.log(chalk.green(`El usuario ${respuesta.user} ha creado su directorio`));
-      }
-
-      if (respuesta.type === 'add') {
-        console.log(`${respuesta.notes.title}`);
-        return console.log(chalk.green(`La nota ${title[0]} ha sido creada correctamente`));
-      }
-
-      if (respuesta.type === 'update') {
-        return console.log(chalk.green(`La nota ${title[0]} ha sido actualizada correctamente`));
-      }
-
-      if (respuesta.type === 'remove') {
-        return console.log(chalk.green(`La nota ${title[0]} ha sido eliminada correctamente`));
-      }
-
-      if (respuesta.type === 'read') {
-        return console.log(chalk.green(`La nota ${title[0]} ha sido leida correctamente`));
-      }
-
-      if (respuesta.type === 'list') {
-        for (let i = 0; i < title.length; i++) {
-          result += `${chalk.green(`${i + 1}`)}. ${chalk.green(`${title[i]}`)} => ${chalk.green(`${body[i]}`)}`;
-        }
-        return result;
+      switch (respuesta.type) {
+        case 'add':
+          return chalk.green(`Added note ${title}`);
+          break;
+        case 'read':
+          return chalk.green(`Read note ${title}`);
+          break;
+        case 'remove':
+          return chalk.green(`Removed note ${title}`);
+          break;
+        case 'update':
+          return chalk.green(`Updated note ${title}`);
+          break;
+        case 'list':
+          return chalk.green(`List notes`);
+          break;
+        case 'userAdd':
+          return chalk.green(`Added user ${respuesta.user}`);
+          break;
       }
     } else if (respuesta.success === false) {
-      if (respuesta.type === 'userAdd') {
-        return respuesta.error;
-      }
-
-      if (respuesta.type === 'add') {
-        return respuesta.error;
-      }
-
-      if (respuesta.type === 'update') {
-        return respuesta.error;
-      }
-
-      if (respuesta.type === 'remove') {
-        return respuesta.error;
-      }
-
-      if (respuesta.type === 'read') {
-        return respuesta.error;
-      }
-
-      if (respuesta.type === 'list') {
-        return respuesta.error;
+      switch (respuesta.type) {
+        case 'add':
+          return chalk.red(`Error adding note ${title}`);
+          break;
+        case 'read':
+          return chalk.red(`Error reading note ${title}`);
+          break;
+        case 'remove':
+          return chalk.red(`Error removing note ${title}`);
+          break;
+        case 'update':
+          return chalk.red(`Error updating note ${title}`);
+          break;
+        case 'list':
+          return chalk.red(`Error listing notes`);
+          break;
+        case 'userAdd':
+          return chalk.red(`Error adding user ${respuesta.user}`);
+          break;
       }
     }
   }

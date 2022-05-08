@@ -5,11 +5,15 @@ import {addnoteInterface} from '../comandos/interfaces';
 
 let request: RequestType;
 
-// Add Note
-
+/**
+ * Add Note
+ */
 export class ADDNote implements addnoteInterface {
   constructor() {}
-  public addNote() {
+  /**
+   * Add a new note
+   */
+  addNote() {
     yargs.command({
       command: 'add',
       describe: 'Add a new note',
@@ -35,6 +39,9 @@ export class ADDNote implements addnoteInterface {
           type: 'string',
         },
       },
+      /**
+       * @param argv Arguments
+       */
       handler(argv) {
         request = {
           type: 'add',

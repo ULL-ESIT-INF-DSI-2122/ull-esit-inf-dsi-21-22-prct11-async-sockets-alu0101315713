@@ -5,11 +5,15 @@ import {readInterface} from '../comandos/interfaces';
 
 let request: RequestType;
 
-// Add Note
+/**
+ * Read Note
+ */
 export class ReadNote implements readInterface {
   constructor() {}
+  /**
+   * Read a note
+   */
   public readNote() {
-    // Read Note
     yargs.command({
       command: 'read',
       describe: 'Read a note',
@@ -25,6 +29,9 @@ export class ReadNote implements readInterface {
           type: 'string',
         },
       },
+      /**
+       * @param argv Arguments
+       */
       handler(argv) {
         request = {type: 'read',
           user: `${argv.user}`,

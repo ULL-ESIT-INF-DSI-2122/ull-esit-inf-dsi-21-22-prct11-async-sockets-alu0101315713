@@ -1,24 +1,21 @@
 # Autor: Felipe Gómez Fuentes
 
-[![Coveralls](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713/actions/workflows/coverall.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713/actions/workflows/coverall.yml) [![Test](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713/actions/workflows/node.js.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713/actions/workflows/node.js.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713)
-
 - [Autor: Felipe Gómez Fuentes](#autor-felipe-gómez-fuentes)
 - [0. Github Pages](#0-github-pages)
-- [1. Práctica 10 - Sistema de ficheros y creación de procesos en Node.js](#1-práctica-10---sistema-de-ficheros-y-creación-de-procesos-en-nodejs)
+- [1. Práctica 10 - Cliente y servidor para una aplicación de procesamiento de notas de texto.](#1-práctica-10---cliente-y-servidor-para-una-aplicación-de-procesamiento-de-notas-de-texto)
 - [2. Tareas Previas.](#2-tareas-previas)
 - [3. Para empezar.](#3-para-empezar)
-- [4. Ejercicios](#4-ejercicios)
-  - [4.1 - Ejercicio 1](#41---ejercicio-1)
-- [4.2 - Ejercicio 2](#42---ejercicio-2)
-- [4.3 - Ejercicio 3](#43---ejercicio-3)
-- [4.4 - Ejercicio 4](#44---ejercicio-4)
+- [4. Aplicación](#4-aplicación)
+  - [4.1 - Servidor](#41---servidor)
+- [4.2 - Manejo de datos](#42---manejo-de-datos)
+- [4.3 - Cliente](#43---cliente)
 - [5. Conclusiones](#5-conclusiones)
 - [6. Bibliografía](#6-bibliografía)
 
 # 0. Github Pages
-- Si desea verlo en Pages, consulte [aquí](https://ull-esit-inf-dsi-2122.github.io/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713/).
+- Si desea verlo en Pages, consulte [aquí](https://ull-esit-inf-dsi-2122.github.io/ull-esit-inf-dsi-21-22-prct11-async-sockets-alu0101315713/).
 
-# 1. Práctica 10 - Sistema de ficheros y creación de procesos en Node.js
+# 1. Práctica 10 - Cliente y servidor para una aplicación de procesamiento de notas de texto.
 - En este [repositorio](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713) donde haré un resumen haciendo una descripción de todos los pasos para el procedimiento de esta práctica. La práctica consiste en hacer una serie de ejercicios siguiendo la [estructura básica de proyecto](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-project-setup.html) que se vio en clase, incluyendo todos los dichos archivos en el directorio [src](src/) que contiene las soluciones de los ejercicios.
 
 # 2. Tareas Previas.
@@ -43,157 +40,201 @@
 |- Leer los recursos sobre yargs, por si se necesita algún curso para aprender.|
 |- Leer los recursos sobre chalk, por si se necesita algún curso para aprender.|
 
-
 # 3. Para empezar.
 - Los ejercicios deben de cumplir la [estructura básica de proyecto](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-project-setup.html) mencionada anteriormente, e incluiremos los ejercicios en el directorio [./src](src/) haciendo uso de la metodología SOLID. Una vez instaladas las dependencias de Mocha, Chai, Coveralls, TypeDoc, node, yargs y chalk se deberá de hacer la documentación de TypeDoc en la carpeta [./docs](docs/) y la metodología TDD en la carpeta [./tests](tests/).
 
-# 4. Ejercicios
+# 4. Aplicación
 
-## 4.1 - Ejercicio 1
-El programa que se propone en el enunciado recibe un fichero por escrito y genera un watcher. Éste revisa a tiempo real los cambios ocurridos en el fichero. Se usará el método access() del módulo fs, que sirve para comprobar los distintos estados posibles en el fichero. El comando F_OK nos ayudará para saber si el fichero existe o no.
-
-Para hacernos una idea, el programa funciona de esta manera:
-- Se comprueba si hay 3 argumentos, siendo el tercero el fichero
-  - Si no hay 3 argumentos, entra el console.log() a la pila de llamadas, se ejecuta y se finaliza el programa.
-  - Si se dan correctamente, se ejecuta el programa.
-- Entra access() a la pila de llamadas.
-- En caso de que haya un error (`'err' == true`), saldrá un el console.log() avisando de que el fichero no existe.
-  - Se ejecuta el console.log() dicho, que saldrá de la pila de llamadas.
-- En el caso contrario (`'err' == false`):
-  - Entra a la pila de llamadas el console.log() indicando que se va a observar el fichero. Se ejecuta y sale de la pila de llamadas.
-  - Entra también el watch().
-  - Entra también el console.log() que avisa de que el fichero no se observa. Se imprime por pantalla y sale de la pila de llamadas.
-  - watch() se dirige al registro de eventos.
-  - Cuando se modifique el fichero.
-  - watch() salta con el evento `change` y este pasa a la cola de manejadores.
-  - Entra en la pila de llamadas el console.log() que nos informa de que se ha cambiado el fichero. Se muestra por pantalla. Sale de la pila de llamadas.
-  - Repetirá lo mismo cada vez que se modifique el fichero.
-
-# 4.2 - Ejercicio 2
-
-- Para este ejercicio creé una clase Reader donde pido por atributos el nombre del fichero.
-
+## 4.1 - Servidor
+- El servidor creará un socket para establecer una conexión, en este caso se hará uso del puerto 60300. Tengo 2 funciones:
+Función donde creo el servidor, inicio su puerto de enlace y recibo los datos del cliente:
 ```ts
-/**
- * Reader class, it has 2 methods, 1 using pipe and
- * another one without it
- */
-export class Reader {
-  /**
-   * @param file file to read
-   */
-  constructor(private file: string) {
+start() {
+    net.createServer({allowHalfOpen: true}, (connection) => {
+      console.log('Un usuario se ha conectado.');
+      let datosCliente = '';
+      connection.on('data', (data) => {
+        datosCliente += data.toString();
+        this.datosServidor(datosCliente, connection);
+      });
+    }).listen(60300, () => {
+      console.log('Servidor iniciado en el puerto 60300.');
+    });
   }
 ```
-
-- Luego hice 2 métodos:
-- Méodo 1:
-  - Hago uso del método `pipe`. Primero creo los comandos `cat` y `grep` que piden en el enunciado con  el método `spawn`. En este método, la palabra que busco con el `grep` no la introduce el usuario. La idea principal es usar pipe para poder unir (si el usuario quisiera) ambos comandos, haciendo uso de `cat.stdout.pipe(grep.stdin);` en mi caso. Con un auxiliar voy recogiendo las palabras repetidas del grep y la línea en la que aparece, y luego lo imprimo con el método `on`.
-```ts
-  /**
-   * it makes a cat and grep command using pipe
-   */
-  metodo1() {
-    const cat = spawn('cat', ['-n', this.file]);
-    const grep = spawn('grep', ['Hola']);
-    cat.stdout.pipe(grep.stdin);
-    let auxiliaryGrep: String = '';
-    grep.stdout.on('data', (piece) => {
-      auxiliaryGrep = piece.toString();
-    });
-    grep.on('close', () => {
-      console.log();
-      console.log(chalk.green('File Content:'));
-      console.log(auxiliaryGrep);
-    });
-  }
-  ```
-- Método 2:
-  - Aquí no hago uso del método pipe, por lo cual creo el comando de `cat` y `grep` directamente con un único spawn, hago el mismo auxiliar con el mismo uso para el `grep`, y aquí tuve más libertad para poder imprimir por pantalla el número de veces que aparece la palabra, que en mi caso obligué que sea `Hola`.
-```ts
-  /**
- * it makes a cat and grep command without pipe
- */
-  metodo2() {
-    const catGrep = spawn('cat', [this.file, 'grep', 'Hola']);
-    let contador = 0;
-    let auxiliaryCatGrep = '';
-    catGrep.stdout.on('data', (piece) => {
-      auxiliaryCatGrep = piece.toString();
-    });
-    catGrep.on('close', () => {
-      console.log();
-      console.log(chalk.green('File Content:'));
-      console.log(auxiliaryCatGrep);
-      const result = auxiliaryCatGrep.split(/\s+/);
-      result.forEach((element) => {
-        if (element === 'Hola') {
-          contador++;
-        }
-      });
-      if (contador === 0) {
-        console.log();
-        console.log(chalk.red('No se encontró la palabra'));
-      } else {
-        console.log();
-        console.log(chalk.green('The word "Hola" appears ' + contador + ' times'));
-      }
-    });
-  }
-  ```
-
-# 4.3 - Ejercicio 3
-
-- Para revisar los cambios que van a ir surgiendo dentro del fichero y de manera óptima, había que usar el método `watch()`, así que hice uso de `yargs` para dar más comodidad a la hora de añadir los comandos. Obligo a que escriba `watch` y luego que escriba la ruta donde se encuentre el archivo. Si se escriben bien los argumentos, que son 4, el comando node, el programa de node, el comando watch y el nombre del archivo, no saltará un mensaje de error, y se dispondrá a buscar la existencia del archivo con la función `F_OK`. Si pasa el control, ya estará dentor del fichero y a la espera de que surjan cambios. Aquí ya funciona exactamente igual que en el ejercicio 1.
+- Función del manejo de los datos en sí:
 ```ts
 /**
- * watch command, it sees if the file you ae looking forEach
- * exists and has been changed or rename at any time
- */
-yargs.command({
-  command: 'watch',
-  describe: 'watch a file',
-  builder: {
-  },
-  handler() {
-    if (process.argv.length !== 4) {
-      console.log(chalk.green('Entra'));
-      console.log(chalk.blue('node dist/ejercicio3/ejercicio-3.js watch [nombre archivo]'));
-    } else {
-      fs.access(process.argv[3], fs.constants.F_OK, (err) => {
-        if (err) {
-          console.log(chalk.red('No existe el fichero'));
-          console.log(chalk.green('Escoja una nueva ruta'));
-        } else {
-          fs.watch(process.argv[3], (eventType, filename) => {
-            if (eventType === 'change') {
-              console.clear();
-              console.log(chalk.green('Fichero modificado: ' + filename));
-            } else if (eventType === 'rename') {
-              console.clear();
-              console.log(chalk.green('File renombrado: ' + filename));
-            }
-          });
-        }
-      });
+   * Se mueve todo el manejo de datos
+   * @param datosCliente Datos del cliente
+   * @param connection Conexión del cliente
+   */
+  datosServidor(datosCliente: string, connection: net.Socket) {
+    const jsonclient = JSON.parse(datosCliente);
+    switch (jsonclient.type) {
+      /**
+       * Añade una nota
+       */
+      case 'add':
+        console.log(chalk.green('Se ha solicitado una nueva nota.'));
+        addNote.addNoteCallback(`${jsonclient.user}`, `${jsonclient.title}`, `${jsonclient.body}`, `${jsonclient.color}`, (err: any, correct: any) => {
+          if (err) {
+            connection.write(JSON.stringify(err));
+          } else if (correct) {
+            connection.write(JSON.stringify(correct));
+          }
+          connection.end();
+        });
+        break;
+        /**
+         * Modifica una nota
+         */
+      case 'update':
+        console.log(chalk.green('Se ha solicitado una actualización de nota.'));
+        modifyNote.modifyNoteCallback(`${jsonclient.user}`, `${jsonclient.title}`, `${jsonclient.body}`, (err, correct) => {
+          if (err) {
+            connection.write(JSON.stringify(err));
+          } else if (correct) {
+            connection.write(JSON.stringify(correct));
+          }
+          connection.end();
+        });
+        break;
+        /**
+         * Elimina una nota
+         */
+      case 'remove':
+        console.log(chalk.green('Se ha solicitado una eliminación de nota.'));
+        removeNote.removeNoteCallback(`${jsonclient.user}`, `${jsonclient.title}`, (err, correct) => {
+          if (err) {
+            connection.write(JSON.stringify(err));
+          } else if (correct) {
+            connection.write(JSON.stringify(correct));
+          }
+          connection.end();
+        });
+        break;
+        /**
+         * Lee una nota
+         */
+      case 'read':
+        console.log(chalk.green('Se ha solicitado una lectura de nota.'));
+        readNote.readNoteCallback(`${jsonclient.user}`, `${jsonclient.title}`, (err: any, correct: any) => {
+          if (err) {
+            connection.write(JSON.stringify(err));
+          } else if (correct) {
+            connection.write(JSON.stringify(correct));
+          }
+          connection.end();
+        });
+        break;
+        /**
+         * Lista las notas
+         */
+      case 'list':
+        console.log(chalk.green('Se ha solicitado una lista de notas.'));
+        listNotes.listNoteCallback(`${jsonclient.user}`, (err: any, correct: any) => {
+          if (err) {
+            connection.write(JSON.stringify(err));
+          } else if (correct) {
+            connection.write(JSON.stringify(correct));
+          }
+          connection.end();
+        });
+        break;
     }
-  },
-});
+  }
+}
 ```
 
-# 4.4 - Ejercicio 4
-
-- En este ejercicio, como en todos, cumplo los principios SOLID, pero en [este ejercicio](src/ejercicio4/) se nota bastante. Tengo los comandos en la carpeta [comandos](src/ejercicio4/comandos/), donde en cada fichero hay un comando que se nos pide en el enunciado: 
-1. Dada una ruta concreta, mostrar si es un directorio o un fichero.
-2. Crear un nuevo directorio a partir de una nueva ruta que recibe como parámetro.
-3. Listar los ficheros dentro de un directorio.
-4. Mostrar el contenido de un fichero (similar a ejecutar el comando cat).
-5. Borrar ficheros y directorios.
-6. Mover y copiar ficheros y/o directorios de una ruta a otra. Para este caso, la aplicación recibirá una ruta origen y una ruta destino. En caso de que la ruta origen represente un directorio, se debe copiar dicho directorio y todo su contenido a la **ruta destino**.
-
-- Al hacer uso de **wrapper**, se simplifica muchísimo el código, cada comando viene implementado por una interfaz que creo [aquí](src/ejercicio4/comandos/interfaces.ts). Cada comando estará dentro de un yargs, y dentro de un método de una clase distinta. Todos los objetos se crearán dentro de una [app](src/ejercicio4/app.ts) donde se ejecutará la app por completo:
+- Para el esta última función hago uso de un evento, que en mi caso lo llamé MyEventEmitter:
 ```ts
+import {EventEmitter} from 'events';
+import {RequestType} from './type';
+import * as net from 'net';
+/**
+ * EventEmitter para la comunicación con el cliente
+ */
+export class MyEventEmitter extends EventEmitter {
+  constructor(public connection: net.Socket) {
+    super();
+  }
+  public writeData(message: RequestType) {
+    this.connection.write(`${JSON.stringify(message)}`);
 
+    let wholeData = '';
+    this.connection.on('data', (dataChunk) => {
+      wholeData += dataChunk.toString();
+      this.emit('response', wholeData);
+    });
+  }
+}
+```
+- De esta forma es posible establecer una conexión cliente-servidor por parte del servidor.
+
+# 4.2 - Manejo de datos
+- Para que funcionen los comandos decidí crear una clase por cada uno y meterla por ficheros separados. De manera que tuve que hacer 2 ficheros por opcion, una con el yargs que le pide el comando por pantalla al usuario, y otra con la función que va a recibir el servidor donde tendrá que ejecutar el comando que dicho cliente le mande para enviarle la respuesta al cliente.
+- Para el tema de las opciones hice algo así en [opciones](src/app/opciones/):
+```
+📦src
+ ┣ 📂app
+ ┃ ┣ 📂opciones
+ ┃ ┃ ┣ 📜addnote.ts
+ ┃ ┃ ┣ 📜adduser.ts
+ ┃ ┃ ┣ 📜listnote.ts
+ ┃ ┃ ┣ 📜modifynote.ts
+ ┃ ┃ ┣ 📜readnote.ts
+     ┗ 📜removenote.ts
+```
+
+- Donde, dependiendo del comando que le proporcione el cliente, accederá a un fichero u otro del servidor (visto en el switch anterior) y ejecutará el comando para que de un resultado. Ese resultado se lo enviará al cliente.
+
+- La parte donde el cliente escribe los comandos está en el directorio [comandos](src/app/comandos/). Donde cada comando se encuentra en una clase y archivo diferente. Son comandos bastante parecidos a la [práctica 9](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct09-filesystem-notes-app-alu0101315713), donde hago uso de comandos para añadir, modificar, eliminar notas y usuarios, y la [práctica 10](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713.git), donde hago comandos para leer, actualizar y crear directorios y ficheros.
+- La mayor diferencia respecto a las otras prácticas fue que ahora solo hay que enviar request al servidor. Por ejemplo:
+- ``handler`` de la función `ADDNote`:
+```ts
+handler(argv) {
+        request = {
+          type: 'add',
+          user: `${argv.user}`,
+          title: `${argv.title}`,
+          body: `${argv.body}`,
+          color: `${argv.color}`};
+
+        const client = new Client(request);
+        client.client();
+      },
+```
+- ``handler`` de la función `ADDUser`:
+```ts
+handler(argv) {
+        request = {
+          type: 'userAdd',
+          user: `${argv.user}`};
+
+        const client = new Client(request);
+        client.client();
+      },
+```
+- Como podemos apreciar, los comandos van a ser bastantes similares, y en todos los comandos al final llamamos al cliente para que introduzca por pantalla los argumentos. El resto de comandos del directorio [comandos](src/app/comandos/) que tengan en su nombre `command` son comandos de la práctica anterior que no se piden en esta práctica pero deja el código más utilizable.
+# 4.3 - Cliente
+- Para el tema del cliente, como se ha explicado antes, hay que pedirle que escriba el comando que quiera ejecutar, para ello primero debe de poder conectarse al puerto, así que lo uniremos con el socket.
+```ts
+  client() {
+    const json: any = this.request;
+
+    const myEventEmitter = new MyEventEmitter(net.connect({port: 60300}));
+    myEventEmitter.writeData(json);
+
+    myEventEmitter.on('response', (data) => {
+      console.log(this.display(data));
+    });
+```
+- Una vez conectado, hice un display del resultado que tendrá el usuario una vez se ejecute correctamente. Este display tiene 2 switches, uno para el caso de que se ejecute correctamente y otro cuando no.
+
+- Por último, hice un directorio [app](src/app/app.ts) donde se ejecuta el cliente y contiene todas las opciones y todos los comandos:
+  - Importaciones:
+```ts
 import * as yargs from 'yargs';
 import {LScommand} from './comandos/lscommand';
 import {MKDIRcommand} from './comandos/mkdircommand';
@@ -203,14 +244,32 @@ import {RMcommand} from './comandos/rmcommand';
 import {MVcommand} from './comandos/mvcommand';
 import {CPcommand} from './comandos/cpcommand';
 
-const ls = new LScommand();
-const mkdir = new MKDIRcommand();
-const lsfiles = new LSFILEScommand();
-const cat = new CATcommand();
-const rm = new RMcommand();
-const mv = new MVcommand();
-const cp = new CPcommand();
+import {ADDNote} from './comandos/add_note';
+import {ModifyNote} from './comandos/modify_note';
+import {RemoveNote} from './comandos/remove_note';
+import {ReadNote} from './comandos/read_note';
+import {ListNotescommand} from './comandos/list_note';
+import {ADDuser} from './comandos/add_user';
+```
+  - Exportaciones
+```ts
+export const ls = new LScommand();
+export const mkdir = new MKDIRcommand();
+export const lsfiles = new LSFILEScommand();
+export const cat = new CATcommand();
+export const rm = new RMcommand();
+export const mv = new MVcommand();
+export const cp = new CPcommand();
 
+export const addNote = new ADDNote();
+export const addUser = new ADDuser();
+export const modifyNote = new ModifyNote();
+export const removeNote = new RemoveNote();
+export const readNote = new ReadNote();
+export const listNote = new ListNotescommand();
+```
+  - LLamadas a funciones:
+```ts
 ls.ls();
 mkdir.mkdir();
 lsfiles.lsfiles();
@@ -219,9 +278,18 @@ rm.rm();
 mv.mv();
 cp.cp();
 
-yargs.parse();
+addNote.addNote();
+addUser.adduser();
+modifyNote.modifyNote();
+removeNote.removeNote();
+readNote.readNote();
+listNote.list();
 
+yargs.parse();
 ```
+
+- Como se puede observar, hay clases importadas y exportadas separadas, porque como se dijo con anterioridad, hay clases que ya venían hechas que no entraban en el enunciado, sino que son un plus, hechas ya de prácticas anteriores, y las últimas son las que sí se piden en el enunciado.
+
 # 5. Conclusiones
 
 - Los ejercicios han servido como repaso sobre cómo usar las funciones de las strings, el uso de los arrays, tuplas y los enumerados en TypeScript. Hay que tener en cuenta que, para las pruebas TDD, primero hay que tener bien instalado Mocha y Chai, y bien escrito el archivo `.mocharc.json`, que siguiendo este [vídeo](https://drive.google.com/file/d/1-z1oNOZP70WBDyhaaUijjHvFtqd6eAmJ/view) tendría que quedar algo similar o igual a [esto](./.mocharc.json).
@@ -232,18 +300,16 @@ yargs.parse();
 - También es interesante el uso de la herramienta Coverall que nos informa los archivos con código fuente en Typescript que se han analizado y que se sacan del fichero [.mocharc.json](./.mocharc.json). Coverall nos indica el cubrimiento que le damos a las funciones, la líneas que no están cubiertas y cuánto % se cubre de las sentencias y las ramas. Para saber instalarlo una buena opción es ver este [vídeo](https://drive.google.com/file/d/1xLDc4CpoYpsAlCFO_4DMwu7MKCtcZDnh/view).
 
 
-- Otro factor bastante importante fue hacer uso de los [Principios SOLID](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-solid.html), que fue clave para hacer clases específicas pra métodos específicos, estos principios se usaron en toda la práctica, por ejemplo, en [este ejercicio](src/ejercicio4/).
+- Otro factor bastante importante fue hacer uso de los [Principios SOLID](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-solid.html), que fue clave para hacer clases específicas pra métodos específicos, estos principios se usaron en toda la práctica.
 
 - La librería fs ha sido bastante clave para poder manejar los ficheros de manera asíncrona, como se ha explicado en los puntos anteriores.
 
-- Wrapper ha servido de mucho para optimizar código en menos líneas y hacer que sea más legible
-
-- Se puede observar que se ha usado las funciones de chalk para imprimir mensajes de colores en todas las funciones. Saldrá verde en caso de que se ejecute correctamente, en rojo de que haya algún fallo, y en el caso del comando `list`, si se ejecuta correctamente, saldrá el nombre de la(s) nota(s) del color que tengan como atributo.
+- **HAY FALLOS EN ALGUNOS COMANDOS.** No se han podido terminar con éxito algunos comandos, como por ejemplo, el `addUser` o el `read`, pero en cambio, algunos como el `list` sí funcionan correctamente. El comando se pasa bien por parte del cliente, el servidor recibe de forma correcta el comando, pero hay condiciones que no se cumplen a la hora de devolver el resultado al cliente. Se ha intentado de varias formas y no se ha encontrado solución.
 
 - Para poder hacer buen uso del SonarCloud, tuvo que ser necesario **no usar** la última versión de node (18.0.0), sino que tuve que usar la versión `17.7.2`. De esta forma se pudo realizar tanto las pruebas de Coveralls como el scanner de SonarCloud correctamente.
 
 # 6. Bibliografía
-1. [Enunciado Práctica 10](https://ull-esit-inf-dsi-2122.github.io/prct10-async-fs-process/)
+1. [Enunciado Práctica 11](https://ull-esit-inf-dsi-2122.github.io/prct11-async-sockets/)
 2. [Introducción a Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
 3. [Recurso sobre GitHub Pages](https://docs.github.com/en/pages)
 4. [Página web de Jekyll](https://jekyllrb.com/)

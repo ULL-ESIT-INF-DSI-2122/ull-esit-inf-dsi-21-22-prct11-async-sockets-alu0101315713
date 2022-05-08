@@ -3,7 +3,7 @@ import {Note, ResponseType} from '../type';
 import chalk from 'chalk';
 
 /**
- * Class to List Notes
+ * Class to List
  */
 export class ListNotes {
   constructor() {
@@ -20,16 +20,24 @@ export class ListNotes {
       type: 'add',
       success: false,
     };
-
+    /**
+     * Check if the user directory exists
+     */
     fs.access(`src/app/notas/${user}/`, fs.constants.F_OK, (err) => {
       if (err) {
         response = {type: 'list', success: false, error: 'User not found'};
         cb(response, undefined);
       } else {
+        /**
+         * List all notes
+         */
         fs.access(`src/app/notas/${user}/`, fs.constants.F_OK, (err) => {
           if (err) {
             response = {type: 'list', success: false, error: chalk.red('User not found')};
             cb(response, undefined);
+            /**
+             * List all notes
+             */
             fs.readdir(`src/app/notas/${user}/`, (err, files) => {
               if (err) {
                 response = {type: 'list', success: false, error: chalk.red('Error reading notes')};

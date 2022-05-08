@@ -11,6 +11,9 @@ let request: RequestType;
  */
 export class ListNotescommand implements listInterface {
   constructor() {}
+  /**
+   * List notes
+   */
   list() {
     yargs.command({
       command: 'list',

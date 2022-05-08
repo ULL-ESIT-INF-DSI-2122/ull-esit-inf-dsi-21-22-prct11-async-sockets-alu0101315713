@@ -5,10 +5,15 @@ import {modifynoteInterface} from '../comandos/interfaces';
 
 let request: RequestType;
 
-// Add Note
+/**
+ * Add Note
+ */
 export class ModifyNote implements modifynoteInterface {
   constructor() {}
-  public modifyNote() {
+  /**
+   * Add a new note
+   */
+  modifyNote() {
     yargs.command({
       command: 'modify',
       describe: 'Modify an existing Note',
@@ -29,6 +34,9 @@ export class ModifyNote implements modifynoteInterface {
           type: 'string',
         },
       },
+      /**
+       * @param argv Arguments
+       */
       handler(argv) {
         request = {
           type: 'update',

@@ -3,7 +3,7 @@ import {ResponseType} from '../type';
 import chalk from 'chalk';
 
 /**
- * Class to Remove Notes
+ * Class to Remove
  */
 export class RemoveNote {
   constructor() {
@@ -20,11 +20,17 @@ export class RemoveNote {
       type: 'add',
       success: false,
     };
+    /**
+     * Check if the user directory exists
+     */
     fs.access(`src/app/notas/${user}/${title}.json`, fs.constants.F_OK, (err: any) => {
       if (err) {
         response = {type: 'remove', success: false, error: chalk.red('Note not found')};
         cb(response, undefined);
       } else {
+        /**
+         * Remove the note
+         */
         fs.unlink(`src/app/notas/${user}/${title}.json`, (err: any) => {
           if (err) {
             response = {type: 'remove', success: false, error: chalk.red('Error removing note')};
